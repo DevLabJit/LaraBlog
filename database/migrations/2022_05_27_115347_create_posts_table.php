@@ -15,6 +15,21 @@ class CreatePostsTable extends Migration
     {
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
+            $table->string('title', 80);
+            $table->string('slug')->unique();
+            $table->boolean('status')->default(0);
+            $table->longText('content');
+            $table->binary('image')->nullable();
+
+
+            $table->foreignId('category_id')
+                  ->constrained()
+                  ->onDelete('cascade');
+
+            $table->foreignId('user_id')
+                  ->constrained()
+                  ->onDelete('cascade');
+
             $table->timestamps();
         });
     }
@@ -26,6 +41,8 @@ class CreatePostsTable extends Migration
      */
     public function down()
     {
+        Schema::enableForeignKeyConstraints();
         Schema::dropIfExists('posts');
+
     }
 }
