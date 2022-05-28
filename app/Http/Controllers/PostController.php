@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class PostController extends Controller
 {
@@ -13,7 +15,19 @@ class PostController extends Controller
      */
     public function index()
     {
-        //
+
+   
+        /*$posts = Post::latest()->where('status', '=', '0')->first()->get();*/
+        
+        $posts = DB::table('posts')
+            ->join('users', 'posts.user_id', '=', 'users.id')
+            ->join('categories', 'posts.category_id', '=', 'categories.id')
+            ->select('users.name', 'categories.name as category', 'posts.title', 'posts.slug', 'posts.status','posts.created_at')
+            ->get();
+
+        /*  dd($random);*/
+
+        return view('admin.blog.posts.index', compact(['posts']));
     }
 
     /**
@@ -80,5 +94,18 @@ class PostController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+
+    /**
+     * [getRandomColors to post categories]
+     * @return [type] [description]
+     */
+    public function getRandomColors()
+    {
+        
+        
+
+
     }
 }
