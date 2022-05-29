@@ -13,6 +13,7 @@
 
         <!-- Styles -->
 
+
         {{ $styles ?? 'no style found' }}
 
 
@@ -31,12 +32,18 @@
 	    		
 	    		</h1>
 
+                
+
 	    		{{ $app_menu }}
 
 	    			{{-- {{ $icon_listList ?? 'no icon found' }} --}}
+
+
     			
 
     		</div>
+
+            {{ Breadcrumbs::render() }}
 
     		<div class="d-flex align-items-center align-content-center justify-content-between border-bottom-5 p-2 mb-2 bg-primary bg-gradient text-light">
     			
@@ -48,11 +55,11 @@
 
 
 
-    			
+
     		{{ $slot ?? 'no main content found' }}
+            
 
 
-			    		
 
 
     	</div>
@@ -62,6 +69,8 @@
 
 
     	{{ $scripts ?? 'no script found'}}
+
+        <script defer src="{{ asset('https://cdn.jsdelivr.net/npm/alpinejs@3.8/dist/cdn.min.js') }}"></script>
 
     </body>
 </html>

@@ -13,7 +13,7 @@ class PostRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -23,8 +23,25 @@ class PostRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            //
+        $rules =  [
+            
+            'title' => 'required|unique:posts|min:40|max:250',
+            'image' => 'required|image|mimes:jpg,png,jpeg,svg,gif',
+            'content' => 'required',
+            'category_id' => 'required',
         ];
+
+        if($this->getMethod() == "POST")
+        {
+            $rules = [
+                'title' => 'required|unique:posts|min:40|max:250',
+                'image' => 'required|image|mimes:jpg,png,jpeg,svg,gif',
+                'content' => 'required',
+                'category_id' => 'required',
+            ];
+        }
+
+        return $rules;
+
     }
 }

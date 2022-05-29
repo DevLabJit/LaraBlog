@@ -29,15 +29,15 @@ class PostFactory extends Factory
     public function definition()
     {
 
-
         return [
             
             'title'=> $this->faker->sentence($nbWords = 6, $variableNbWords = true),  
             'slug' => Str::slug($this->faker->sentence($nbWords = 6, $variableNbWords = true), '-'),
             'content' => $this->faker->text($maxNbChars = 200),
-            'image' => $this->faker->image,
+            'image' => $this->faker->imageUrl(640, 480, 'animals', true),
             'category_id' => Category::pluck('id')->random(),
-            'user_id' => User::pluck('id')->random(),
+            /*'user_id' => User::pluck('id')->random(),*/
+
         ];
     }
 }

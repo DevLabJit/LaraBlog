@@ -10,8 +10,6 @@
     	<!-- Material Icons-->
 		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 		<!-- Bootstrap CSS -->
-		<link rel="stylesheet" type="text/css" href="https://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.0/css/jquery.dataTables.css">
-   		<link rel="stylesheet" type="text/css" href="https://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.0/css/jquery.dataTables_themeroller.css">
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
 
 
@@ -39,7 +37,7 @@
     	</x-slot>
 
 
-    	<table id="PostsDataTable" class="table w-100 display caption-top">
+    	<table id="PostsDataTable" class="table table-dark table-striped table-hover align-middle table-lg caption-top caption-top bg-dark bg-gradient">
 
 	    	<caption>
 	    		
@@ -153,18 +151,6 @@
 			@endforelse
 
 		  </tbody>
-		  <tfoot class="table-dark text-center">
-
-		    <tr>
-		    	<th>User</th>
-		    	<th>Post Title</th>
-		    	<th>Status</th>
-		    	<th>Category</th>
-		    	<th>Created At</th>
-		    	<th>Actions</th>
-		    </tr>
-
-		  </tfoot>
 
 		</table>
 
@@ -179,20 +165,6 @@
 
 	<x-slot name="scripts">
 		
-
-
-		<!--Bootstrap Bundle with Popper -->
-		<script type="text/javascript" charset="utf8" src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.1.min.js"></script>
-   		<script type="text/javascript" charset="utf8" src="https://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.0/jquery.dataTables.min.js"></script>
-
-	    <script>
-			$(document).ready(function(){
-			    $('#PostsDataTable').DataTable({
-			    	responsive: true,
-			    	autoFill: true
-			    });
-			});
-	    </script>	
 
 	</x-slot>
 

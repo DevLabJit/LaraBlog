@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Http\Requests\CategoryRequest;
+use App\Models\Category;
+use App\Models\Post;
+use Illuminate\Support\Facades\DB;
 
 class CategoryController extends Controller
 {
@@ -13,7 +16,10 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        return view('admin.blog.categories.index');
+
+        $categories = Category::latest()->get();
+
+        return view('admin.blog.categories.index', compact('categories'));
     }
 
     /**
@@ -23,7 +29,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.blog.categories.create');
     }
 
     /**
@@ -32,9 +38,19 @@ class CategoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-        //
+    public function store(CategoryRequest $CategoryRequest)
+    {   
+        
+        $CategoryRequest->validated();
+
+        $category = new Category();
+
+        $category->name = $CategoryRequest['name'];
+
+        $category->save();
+        
+        return redirect()->back()->withInput();
+    
     }
 
     /**
@@ -43,9 +59,12 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Category $category)
     {
-        //
+
+        $posts = $category->posts;
+        
+        return view('admin.blog.categories.show', compact('posts'));
     }
 
     /**
@@ -77,8 +96,12 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Category $category)
     {
-        //
+        $category = Category::where('id', $category->id)->firstOrFail();
+        
+        $category->delete();
+
+        return redirect(route('categories.index'));
     }
 }

@@ -36,7 +36,7 @@
     	</x-slot>
 
 
-    	<table class="table table-dark table-hover align-middle table-lg caption-top">
+    	<table class="table table-dark table-striped table-hover align-middle table-lg caption-top caption-top bg-dark bg-gradient">
 
 	    	<caption>
 	    		
@@ -46,25 +46,25 @@
 		    		<span class="font-monospace text-capitalize text-decoration-underline">
 		    			
 		    		
-			    		{{-- @if (count($posts) === 1)
+			    		@if (count($categories) === 1)
 
 
-			    				we have {{ count($posts) }} {{ Str::singular('post') }}.
+			    				we have {{ count($categories) }} {{ Str::singular('category') }}.
 
 
-			    		@elseif (count($posts) > 1)
+			    		@elseif (count($categories) > 1)
 
 
-			    				we have {{ count($posts) }} {{ Str::pluralStudly('post') }}.
+			    				we have {{ count($categories) }} {{ Str::pluralStudly('category') }}.
 
 
 			    		@else
 
 
-			    				we have no post records !
+			    				we have no category records !
 
 
-			    		@endif --}}	
+			    		@endif	
 
 					</span>
 
@@ -83,11 +83,8 @@
 		  <thead class="table-dark text-center">
 
 		    <tr>
-		    	<th>User</th>
-		    	<th>Post Title</th>
-		    	<th>Status</th>
-		    	<th>Category</th>
-		    	<th>Created At</th>
+		    	<th>Category name</th>
+		    	<th>Created at</th>
 		    	<th>Actions</th>
 		    </tr>
 
@@ -95,65 +92,81 @@
 
 		  <tbody>
 
-		  	{{-- @forelse ($posts as $post)
+		  	@forelse ($categories as $category)
 			
 			    <tr>
-			    	<td class="text-left">{{ $post->name }}</td>
-			    	<td class="text-left">{{ $post->title }}</td>
+			    	<td class="text-center">
 
-			    	@if ($post->status === 0)
-			    		
-			    		<td>
+			    		<button type="button" class="p-2 position-relative">
 
-			    			<span class="badge rounded-pill bg-warning text-dark">In review</span>
+			    			<a class="text-decoration-none text-dark" href="{{ route('categories.show', $category) }}">{{ $category->name }}</a>
 
-			    		</td>
-				        
-				    @else
+						  <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-secondary">
+						    
 
-			    	<td>
 
-			    		<span class="badge rounded-pill bg-info text-dark">published</span>
+						    {{ $category->posts->count() }} 
+
+
+						    @if ($category->posts->count() === 1)
+
+
+			    				{{ Str::singular('post') }}
+
+
+				    		@elseif ($category->posts->count() > 1)
+
+
+				    			{{ Str::pluralStudly('post') }}
+
+
+				    		@else
+
+				    				post
+
+
+				    		@endif
+
+
+						    <span class="visually-hidden">unread messages</span>
+						  </span>
+						</button>
 
 			    	</td>
 
-			    	@endif
+			    	<td class="text-center">
+			    		{{ Carbon\Carbon::parse($category->created_at)->diffForHumans() }}
+			    	</td>
 
-			    	<td>{{ $post->category }}</td>
-			    	<td>{{ $post->created_at }}</td>
-			    	<td>
-			    		<div class="flex justify-content-center align-content-between">
-			    			<a class="text-decoration-none text-light" href="{{ route('posts.edit', $post->slug) }}">
-			    				<span class="material-icons">edit</span>
-			    			</a>
-			    			<a class="text-decoration-none text-light" href="{{ route('posts.destroy', $post->slug) }}">
+			    	<td class="text-center">
+					
+						<form action="{{route('categories.destroy', $category)}}" method="POST">
+		                    @csrf
+		                    @method('delete')
+				    		
+		                    <button type="submit" class="w-bolder outline-none font-monospace text-uppercase btn btn-info btn-sm rounded-0 text-light">
 			    				<span class="material-icons">
 									delete_forever
 								</span>
-			    			</a>
-			    		</div>
+							</button>
+
+			            </form>
+			    	
 			    	</td>
+
+
 			    </tr>
 			
 			@empty
 			
 			    <tr class="text-center">
-			    	<td colspan=6>No post saved!</td>
+			    	<td colspan=6>No category saved!</td>
 			    </tr>
 			
 			@endforelse
- --}}
+
 		  </tbody>
 		</table>
-
-
-
-
-
-
-
-
-
 
 
 
