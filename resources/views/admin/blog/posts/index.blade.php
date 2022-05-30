@@ -123,21 +123,29 @@
 
 			    	<td>
 
-			    		{{ $post->category }}
+			    		{{ $post->category->name }}
 
 			    	</td>
 
 			    	<td>{{ Carbon\Carbon::parse($post->created_at)->diffForHumans() }}</td>
 			    	<td>
-			    		<div class="flex justify-content-center align-content-between">
-			    			<a class="text-decoration-none text-light" href="{{ route('posts.edit', $post->slug) }}">
-			    				<span class="material-icons">edit</span>
+			    		<div class="d-flex justify-content-center align-content-between align-items-center gap-1">
+
+			    			<a class="w-bolder outline-none font-monospace text-uppercase btn btn-info btn-sm rounded-0 text-dark btn-light" href="{{ route('posts.edit', $post) }}">
+			    				<span class="align-middle material-icons">edit</span>
 			    			</a>
-			    			<a class="text-decoration-none text-light" href="{{ route('posts.destroy', $post->slug) }}">
-			    				<span class="material-icons">
-									delete_forever
-								</span>
-			    			</a>
+
+			    			<form action="{{route('posts.destroy', $post)}}" method="POST">
+			                    @csrf
+			                    @method('delete')
+					    		
+			                    <button type="submit" class="w-bolder outline-none font-monospace text-uppercase btn btn-info btn-sm rounded-0 text-light">
+				    				<span class="align-middle material-icons">
+										delete_forever
+									</span>
+								</button>
+
+				           </form>
 			    		</div>
 			    	</td>
 			    </tr>

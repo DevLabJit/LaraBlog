@@ -70,10 +70,10 @@
 							
 						  		 <div class="col">
 								    <div class="card h-100">
-								      <img src="{{ $post->image }}" class="card-img-top" alt="">
+								      <img src="{{ asset($post->image) }}" class="card-img-top" alt="">
 								      <div class="card-body">
 								        <h5 class="card-title">{{ $post->title }}</h5>
-								        <p class="card-text">{{ $post->content }}.</p>
+								        <p class="card-text">{!! $post->content !!}.</p>
 								      </div>
 									    <div class="card-footer">
 								        	<small class="text-muted">Created {{ Carbon\Carbon::parse($post->created_at)->diffForHumans() }}</small>
@@ -95,6 +95,12 @@
     	
     	</div>
 
+    	<x-slot name="txt_btn">
+
+            <a class="fw-bolder outline-none font-monospace text-uppercase btn btn-info btn-sm rounded-0 text-light" href="{{ route('posts.index') }}">
+                <span class="p-1 align-middle material-icons">list_alt</span>view list
+            </a>
+        </x-slot>
 
 
 

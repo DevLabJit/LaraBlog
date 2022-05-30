@@ -25,16 +25,25 @@ class Post extends Model
      */
     protected $table = 'posts';
 
+
+
+     /*
     /**
      * The primary key associated with the table.
      *
      * @var string
      */
-    protected $primaryKey = 'post_id';
+    /*protected $primaryKey = 'category_id';*/
+
+
+    public function getRouteKeyName()
+    {
+       return 'slug';
+    }
 
 
     /**
-     * Get the category that owns the comment.
+     * Get the category that owns the posts.
      */
     public function category()
     {
@@ -42,7 +51,7 @@ class Post extends Model
     }
 
     /**
-     * Get the user that owns the comment.
+     * Get the user that owns the posts.
      */
     public function user()
     {

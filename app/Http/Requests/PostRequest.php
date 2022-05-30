@@ -25,17 +25,27 @@ class PostRequest extends FormRequest
     {
         $rules =  [
             
-            'title' => 'required|unique:posts|min:40|max:250',
-            'image' => 'required|image|mimes:jpg,png,jpeg,svg,gif',
+            'title' => 'min:10|max:40',
+            'image' => 'image|mimes:jpg,png,jpeg,svg,gif',
             'content' => 'required',
             'category_id' => 'required',
         ];
 
         if($this->getMethod() == "POST")
         {
-            $rules = [
-                'title' => 'required|unique:posts|min:40|max:250',
+            $rules += [
+                'title' => 'required|unique:posts|min:10|max:40',
                 'image' => 'required|image|mimes:jpg,png,jpeg,svg,gif',
+                'content' => 'required',
+                'category_id' => 'required',
+            ];
+        }
+
+        if($this->getMethod() == "PATCH")
+        {
+            $rules += [
+                'title' => 'required|min:10|max:40',
+                'image' => 'nullable|image|mimes:jpg,png,jpeg,svg,gif',
                 'content' => 'required',
                 'category_id' => 'required',
             ];

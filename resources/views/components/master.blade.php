@@ -14,7 +14,7 @@
         <!-- Styles -->
 
 
-        {{ $styles ?? 'no style found' }}
+        {{ $styles ?? '' }}
 
 
     </head>
@@ -43,15 +43,17 @@
 
     		</div>
 
+
             {{ Breadcrumbs::render() }}
 
-    		<div class="d-flex align-items-center align-content-center justify-content-between border-bottom-5 p-2 mb-2 bg-primary bg-gradient text-light">
-    			
-   					{{ $counter ?? 'no counter found' }}
-    			
-    				{{ $txt_btn ?? 'no button found' }}
-   					
-    		</div>
+
+        		<div class="d-flex align-items-center align-content-center justify-content-between border-bottom-5 p-2 mb-2 bg-primary bg-gradient text-light">
+        			
+       					{{ $counter ?? 'no counter found' }}
+        			
+        				{{ $txt_btn ?? 'no button found' }}
+       					
+        		</div>
 
 
 
@@ -68,9 +70,8 @@
 
 
 
-    	{{ $scripts ?? 'no script found'}}
+    	{{ $scripts ?? '' }}
 
-        <script defer src="{{ asset('https://cdn.jsdelivr.net/npm/alpinejs@3.8/dist/cdn.min.js') }}"></script>
 
     </body>
 </html>

@@ -19,6 +19,15 @@
 
 	<li class="nav-item">
 
+		<a class="nav-link" href="{{ route('posts.create') }}">
+			{{ __('add post') }}
+		</a>
+	
+	</li>
+
+
+	<li class="nav-item">
+
 		<a class="nav-link" href="{{ route('posts.index') }}">
 			{{ __('posts') }}
 		</a>

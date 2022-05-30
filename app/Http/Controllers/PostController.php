@@ -7,6 +7,8 @@ use App\Models\Category;
 use App\Models\Post;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class PostController extends Controller
@@ -20,14 +22,14 @@ class PostController extends Controller
     {
 
    
-        /*$posts = Post::latest()->where('status', '=', '0')->first()->get();*/
+        $posts = Post::latest()->where('status', '=', '0')->first()->get();
         
-        $posts = DB::table('posts')
+        /*$posts = DB::table('posts')
             ->join('users', 'posts.user_id', '=', 'users.id')
             ->join('categories', 'posts.category_id', '=', 'categories.id')
             ->select('users.name', 'categories.name as category', 'posts.title', 'posts.slug', 'posts.status','posts.created_at')
             ->latest()
-            ->get();
+            ->get();*/
 
         return view('admin.blog.posts.index', compact(['posts']));
     }
@@ -40,10 +42,7 @@ class PostController extends Controller
     public function create()
     {
 
-        $categories = Category::all();
-        /*$categories = Category::all();*/
-       /* $category = Category::find(1);*/
-        /*$posts = $category->posts;*/ // Returns a Laravel Collection
+        $categories = Category::latest()->get();
         return view('admin.blog.posts.create', compact('categories'));
     }
 
@@ -87,7 +86,7 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Post $post)
     {
         //
     }
@@ -95,12 +94,13 @@ class PostController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
-    {
-        //
+    public function edit(Post $post)
+    {   
+        $categories = Category::all();
+        return view('admin.blog.posts.edit', compact('post', 'categories'));
     }
 
     /**
@@ -110,9 +110,39 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(PostRequest $PostRequest, Post $post)
     {
-        //
+
+        $PostRequest->validated();
+
+            $image = $post->image;
+
+
+            $post->delete($image);
+
+
+            dd($image);
+
+
+        if($PostRequest->file('image'))
+        {
+
+            
+            $file = 'storage/' . $PostRequest->file('image')->store('postsImages', 'public');
+        }
+
+        /*$post->image = $file;*/
+        $post->category_id = $PostRequest->category_id;
+        $post->title = $PostRequest->title;
+        $post->slug = Str::slug($post->title, '-');
+        $post->content = trim($PostRequest->content);
+
+
+
+        $post->update();
+
+
+        return redirect(route('posts.index'));
     }
 
     /**
@@ -121,21 +151,13 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Post $post)
     {
-        //
+        $post = Post::where('id', $post->id)->firstOrFail();
+        
+        $post->category->delete();
+
+        return redirect(route('posts.index'));
     }
 
-
-    /**
-     * [getRandomColors to post categories]
-     * @return [type] [description]
-     */
-    public function getRandomColors()
-    {
-        
-        
-
-
-    }
 }

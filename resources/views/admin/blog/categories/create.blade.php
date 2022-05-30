@@ -31,7 +31,7 @@
 
     	</x-slot>
 
-{{--     	<x-slot name="icon_listList">
+       {{--  <x-slot name="icon_listList">
     		
     		<span class="material-symbols-outlined">
 				list_alt
@@ -50,20 +50,12 @@
     	</x-form_create_category>
 
 
-    	
+    	<x-slot name="txt_btn">
 
-
-
-
-
-	<x-slot name="scripts">
-		
-		<script src="https://htmeditor.com/js/htmeditor.min.js" htmeditor_textarea="htmeditor"></script>
-
-	</x-slot>
-
-
-
+            <a class="fw-bolder outline-none font-monospace text-uppercase btn btn-info btn-sm rounded-0 text-light" href="{{ route('categories.index') }}">
+                <span class="p-1 align-middle material-icons">list_alt</span>view list
+            </a>
+        </x-slot>
 
 
 </x-master>
