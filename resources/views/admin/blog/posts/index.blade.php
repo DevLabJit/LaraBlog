@@ -11,8 +11,8 @@
 		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 		<!-- Bootstrap CSS -->
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
-
-
+		<!-- bootstrap5 dataTables css cdn -->
+    	<link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/dataTables.bootstrap5.min.css"/>
 
 	</x-slot>
   	
@@ -24,11 +24,6 @@
 
     	</x-slot>
 
-    	<x-slot name="app_menu">
-    		
-    		<x-app_navbar></x-app_navbar>
-
-    	</x-slot>
 
     	<x-slot name="icon_listList">
     		
@@ -37,10 +32,14 @@
     	</x-slot>
 
 
-    	<table id="PostsDataTable" class="table table-dark table-striped table-hover align-middle table-lg caption-top caption-top bg-dark bg-gradient">
+
+
+
+    	<table id="datatable" class="table bg-gradient table-success table-striped">
 
 	    	<caption>
 	    		
+
 
 		    	<x-slot name="counter">
 		    	
@@ -81,14 +80,14 @@
 
 	    	</caption>
 
-		  <thead class="table-dark text-center">
+		  <thead class="text-center">
 
 		    <tr>
 		    	<th>User</th>
 		    	<th>Post Title</th>
 		    	<th>Status</th>
 		    	<th>Category</th>
-		    	<th>Created At</th>
+				<th>Created At</th>    	
 		    	<th>Actions</th>
 		    </tr>
 
@@ -96,67 +95,77 @@
 
 		  <tbody>
 
-		  	@forelse ($posts as $post)
-			
-			    <tr>
-			    	<td class="text-left">{{ $post->name }}</td>
-			    	<td class="text-left">{{ $post->title }}</td>
+    		@if ($posts !== [])
 
-			    	@if ($post->status === 0)
-			    		
-			    		<td>
+			  	@forelse ($posts as $post)
+				
+				    <tr>
+				    	<td class="text-left">{{ $post->name }}</td>
+				    	<td class="text-left">{{ $post->title }}</td>
 
-			    			<span class="badge rounded-pill bg-warning text-dark">In review</span>
+				    	@if ($post->status === 0)
+				    		
+				    		<td>
 
-			    		</td>
-				        
-				    @else
+				    			<span class="badge rounded-pill bg-warning text-dark">In review</span>
 
-			    	<td>
+				    		</td>
+					        
+					    @else
 
-			    		<span class="badge rounded-pill bg-info text-dark">published</span>
+				    	<td>
 
-			    	</td>
+				    		<span class="badge rounded-pill bg-info text-dark">published</span>
 
-			    	@endif
+				    	</td>
+
+				    	@endif
 
 
-			    	<td>
+				    	<td>
 
-			    		{{ $post->category->name }}
+				    		{{ $post->category->name }}
 
-			    	</td>
+				    	</td>
 
-			    	<td>{{ Carbon\Carbon::parse($post->created_at)->diffForHumans() }}</td>
-			    	<td>
-			    		<div class="d-flex justify-content-center align-content-between align-items-center gap-1">
+				    	<td>{{ Carbon\Carbon::parse($post->created_at)->diffForHumans() }}</td>
+				    	<td>
+				    		<div class="d-flex justify-content-center align-content-between align-items-center gap-1">
 
-			    			<a class="w-bolder outline-none font-monospace text-uppercase btn btn-info btn-sm rounded-0 text-dark btn-light" href="{{ route('posts.edit', $post) }}">
-			    				<span class="align-middle material-icons">edit</span>
-			    			</a>
+				    			<a class="w-bolder outline-none font-monospace text-uppercase btn btn-info btn-sm rounded-0 text-dark btn-light" href="{{ route('posts.edit', $post) }}">
+				    				<span class="align-middle material-icons">edit</span>
+				    			</a>
 
-			    			<form action="{{route('posts.destroy', $post)}}" method="POST">
-			                    @csrf
-			                    @method('delete')
-					    		
-			                    <button type="submit" class="w-bolder outline-none font-monospace text-uppercase btn btn-info btn-sm rounded-0 text-light">
-				    				<span class="align-middle material-icons">
-										delete_forever
-									</span>
-								</button>
+				    			<form action="{{route('posts.destroy', $post)}}" method="POST">
+				                    @csrf
+				                    @method('delete')
+						    		
+				                    <button type="submit" class="w-bolder outline-none font-monospace text-uppercase btn btn-info btn-sm rounded-0 text-light">
+					    				<span class="align-middle material-icons">
+											delete_forever
+										</span>
+									</button>
 
-				           </form>
-			    		</div>
-			    	</td>
-			    </tr>
-			
-			@empty
-			
-			    <tr class="text-center">
+					           </form>
+				    		</div>
+				    	</td>
+				    </tr>
+				
+				@empty
+				
+				    <tr class="text-center">
+				    	<td colspan=6>No post saved!</td>
+				    </tr>
+				
+				@endforelse
+
+			@else
+
+				<tr class="text-center">
 			    	<td colspan=6>No post saved!</td>
 			    </tr>
-			
-			@endforelse
+
+			@endif
 
 		  </tbody>
 
@@ -171,8 +180,26 @@
 
 
 
+
 	<x-slot name="scripts">
-		
+
+		<!--Bootstrap Bundle with Popper -->
+	    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+	    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+	     <!-- bootstrap5 dataTables js cdn -->
+	    <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+	    <script src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap5.min.js"></script>
+
+	    <script>
+	      $(document).ready(function () {
+	        $('#datatable').DataTable({
+	        	scrollY: '30vh',
+		        scrollCollapse: true,
+		        paging: false,
+	        });
+	      });
+	    </script>
+
 
 	</x-slot>
 

@@ -8,7 +8,6 @@ use App\Models\Post;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class PostController extends Controller
@@ -22,7 +21,8 @@ class PostController extends Controller
     {
 
    
-        $posts = Post::latest()->where('status', '=', '0')->first()->get();
+        $posts = Post::latest()->where('status', '=', '0')->get();
+
         
         /*$posts = DB::table('posts')
             ->join('users', 'posts.user_id', '=', 'users.id')
@@ -31,7 +31,7 @@ class PostController extends Controller
             ->latest()
             ->get();*/
 
-        return view('admin.blog.posts.index', compact(['posts']));
+        return view('admin.blog.posts.index', compact('posts'));
     }
 
     /**
@@ -43,6 +43,7 @@ class PostController extends Controller
     {
 
         $categories = Category::latest()->get();
+
         return view('admin.blog.posts.create', compact('categories'));
     }
 
@@ -61,19 +62,26 @@ class PostController extends Controller
         $category = Category::findOrFail($PostRequest['category_id']);
 
 
-        $post->title = $PostRequest->title;
+        $post->title = Str::title($PostRequest->title);
         $post->slug = Str::slug($post->title, '-');
         $post->content = trim($PostRequest->content);
+        $post->category_id = $category;
 
         //File upload
-        
-        if ($PostRequest->file('image')) {
+        if($PostRequest->hasFile('image'))
+        {
+            $file = $PostRequest->file('image');
+            $extention = $file->getClientOriginalExtension();
+            $filename = time().'.'.$extention;
+            $file->move('uploads/posts/', $filename);
+            $post->image = $filename;
+        }
+        /*if ($PostRequest->file('image')) {
 
             $imagePath = 'storage/' . $PostRequest->file('image')->store('postsImages', 'public');
         }
-
-        $post->image = $imagePath;
-        $post->category_id = $category;
+        */
+        /*$post->image = $imagePath;*/
         $category->posts()->save($post);
 
         return back()->withInput();
@@ -115,29 +123,25 @@ class PostController extends Controller
 
         $PostRequest->validated();
 
-            $image = $post->image;
 
-
-            $post->delete($image);
-
-
-            dd($image);
-
-
-        if($PostRequest->file('image'))
-        {
-
-            
-            $file = 'storage/' . $PostRequest->file('image')->store('postsImages', 'public');
-        }
-
-        /*$post->image = $file;*/
         $post->category_id = $PostRequest->category_id;
-        $post->title = $PostRequest->title;
+        $post->title = Str::title($PostRequest->title);
         $post->slug = Str::slug($post->title, '-');
         $post->content = trim($PostRequest->content);
 
-
+        if($PostRequest->hasFile('image'))
+        {
+            $destination = 'uploads/posts/'.$post->image;
+            if(File::exists($destination))
+            {
+                File::delete($destination);
+            }
+            $file = $PostRequest->file('image');
+            $extention = $file->getClientOriginalExtension();
+            $filename = time().'.'.$extention;
+            $file->move('uploads/posts/', $filename);
+            $post->image = $filename;
+        }
 
         $post->update();
 

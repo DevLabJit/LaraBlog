@@ -21,7 +21,7 @@
     <body>
 
 
-    	<div class="container-lg mt-3">
+    	<div class="container container-lg mt-3 pb-3">
 
 
     		<div class="d-flex align-items-center justify-content-between align-content-center border-bottom-2 border-light shadow-sm p-3 mb-5 bg-dark bg-gradient rounded text-light">
@@ -34,7 +34,7 @@
 
                 
 
-	    		{{ $app_menu }}
+	    		<x-app_navbar></x-app_navbar>
 
 	    			{{-- {{ $icon_listList ?? 'no icon found' }} --}}
 
@@ -62,6 +62,9 @@
             
 
 
+
+
+        <x-footer></x-footer>
 
 
     	</div>

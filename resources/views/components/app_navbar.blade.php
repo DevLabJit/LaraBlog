@@ -3,7 +3,7 @@
 
 	<li class="nav-item">
 
-		<a class="nav-link" href="{{ route('categories.index') }}">
+		<a class="nav-link link-light" href="{{ route('categories.index') }}">
 			{{ __('categories') }}
 		</a>
 	
@@ -11,7 +11,7 @@
 
 	<li class="nav-item">
 
-		<a class="nav-link" href="{{ route('categories.create') }}">
+		<a class="nav-link link-light" href="{{ route('categories.create') }}">
 			{{ __('add category') }}
 		</a>
 	
@@ -19,7 +19,7 @@
 
 	<li class="nav-item">
 
-		<a class="nav-link" href="{{ route('posts.create') }}">
+		<a class="nav-link link-light" href="{{ route('posts.create') }}">
 			{{ __('add post') }}
 		</a>
 	
@@ -28,7 +28,7 @@
 
 	<li class="nav-item">
 
-		<a class="nav-link" href="{{ route('posts.index') }}">
+		<a class="nav-link link-light" href="{{ route('posts.index') }}">
 			{{ __('posts') }}
 		</a>
 	

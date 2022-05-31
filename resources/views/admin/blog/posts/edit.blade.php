@@ -23,11 +23,6 @@
 
     	</x-slot>
 
-    	<x-slot name="app_menu">
-    		
-    		<x-app_navbar></x-app_navbar>
-
-    	</x-slot>
 
 
         <x-slot name="counter">
@@ -102,7 +97,13 @@
                 
                 <div class="col-md-6">
 
-                  <img class="vh-100 wh-100 img-fluid img-thumbnail rounded mx-auto d-block" src="{{ asset($post->image) }}" alt="">
+                  <img class="vh-100 wh-100 img-fluid img-thumbnail rounded mx-auto d-block" src="
+                        @if (File::exists($post->image))
+                        {{ asset('uploads/posts/' . $post->image) }}
+                        @else
+                        {{ $post->image }}
+                        @endif
+                      " alt="">
 
                 </div> 
 

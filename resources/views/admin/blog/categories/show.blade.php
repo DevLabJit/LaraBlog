@@ -23,11 +23,7 @@
     	</x-slot>
 
 
-    	<x-slot name="app_menu">
-    		
-    		<x-app_navbar></x-app_navbar>
 
-    	</x-slot>
 
 			<x-slot name="counter">
 		    	
@@ -49,7 +45,7 @@
 			    		@else
 
 
-			    				we have no post records for this category!
+			    				we have no post created for this category!
 
 
 			    		@endif	
@@ -70,7 +66,14 @@
 							
 						  		 <div class="col">
 								    <div class="card h-100">
-								      <img src="{{ asset($post->image) }}" class="card-img-top" alt="">
+								      <img src="
+									      @if (File::exists($post->image))
+									      {{ asset('uploads/posts/' . $post->image) }}
+									      @else
+									      {{ $post->image }}
+									      @endif
+								      " class="card-img-top" alt="">
+
 								      <div class="card-body">
 								        <h5 class="card-title">{{ $post->title }}</h5>
 								        <p class="card-text">{!! $post->content !!}.</p>

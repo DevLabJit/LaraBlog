@@ -25,11 +25,6 @@
 
     	</x-slot>
 
-    	<x-slot name="app_menu">
-    		
-    		<x-app_navbar></x-app_navbar>
-
-    	</x-slot>
 
        {{--  <x-slot name="icon_listList">
     		
@@ -55,7 +50,12 @@
             <a class="fw-bolder outline-none font-monospace text-uppercase btn btn-info btn-sm rounded-0 text-light" href="{{ route('categories.index') }}">
                 <span class="p-1 align-middle material-icons">list_alt</span>view list
             </a>
+        
         </x-slot>
+
+
+
+
 
 
 </x-master>

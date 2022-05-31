@@ -22,21 +22,8 @@
         </div>
 
 
-        <div class="col-md-3">
 
-          <label for="image" class="form-label text-uppercase">post image</label>
-          <input type="file" class="form-control @error('image') is-invalid @enderror" id="image" name="image" value="{{ old('image') }}">
-          
-          @error('image')
-            <div class="invalid-feedback">
-                  {{ $message }}
-            </div>
-          @enderror
-
-        </div> 
-
-        
-        <div class="col-md-3">
+        <div class="col-md-6">
 
           <label for="category" class="form-label text-uppercase">category</label>
           <select id="category" class="form-select @error('category_id') is-invalid @enderror" name="category_id">
@@ -56,6 +43,33 @@
           @enderror
 
         </div>
+
+
+
+        <div class="col-md-10">
+
+          <label for="image" class="form-label text-uppercase">post image</label>
+          <input type="file" class="form-control @error('image') is-invalid @enderror" id="image" name="image" value="{{ old('image') }}">
+          
+          @error('image')
+            <div class="invalid-feedback">
+                  {{ $message }}
+            </div>
+          @enderror
+
+        </div>
+
+
+       <div class="col-md-2 d-flex align-items-lg-end justify-content-center">
+
+          <div class="form-check">
+            <input disabled class="form-check-input" type="radio" name="status" id="status" value="" checked>
+            <label class="form-check-label text-uppercase">status : in review</label>
+          </div>
+
+        </div> 
+
+
   
 
         <div class="col-12">

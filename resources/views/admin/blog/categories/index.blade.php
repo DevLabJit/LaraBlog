@@ -11,6 +11,9 @@
 		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 		<!-- Bootstrap CSS -->
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
+		<!-- bootstrap5 dataTables css cdn -->
+    	<link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/dataTables.bootstrap5.min.css"/>
+
 	</x-slot>
 
 
@@ -23,11 +26,7 @@
     	</x-slot>
 
 
-    	<x-slot name="app_menu">
-    		
-    		<x-app_navbar></x-app_navbar>
 
-    	</x-slot>
 
     	<x-slot name="icon_listList">
     		
@@ -36,7 +35,7 @@
     	</x-slot>
 
 
-    	<table class="table table-dark table-striped table-hover align-middle table-lg caption-top caption-top bg-dark bg-gradient">
+    	<table id="datatable" class="table bg-gradient table-success table-striped">
 
 	    	<caption>
 	    		
@@ -80,7 +79,7 @@
 
 	    	</caption>
 
-		  <thead class="table-dark text-center">
+		  <thead class="text-center">
 
 		    <tr>
 		    	<th>Category name</th>
@@ -175,7 +174,22 @@
 
 	<x-slot name="scripts">
 		<!--Bootstrap Bundle with Popper -->
+	    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 	    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+	     <!-- bootstrap5 dataTables js cdn -->
+	    <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+	    <script src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap5.min.js"></script>
+
+	    <script>
+	      $(document).ready(function () {
+	        $('#datatable').DataTable({
+	        	scrollY: '30vh',
+		        scrollCollapse: true,
+		        paging: false,
+	        });
+	      });
+	    </script>
+
 	</x-slot>
 </x-master>
 
